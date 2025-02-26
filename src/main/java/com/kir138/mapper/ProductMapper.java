@@ -14,8 +14,6 @@ public class ProductMapper {
                 .price(product.getPrice())
                 .stockQuantity(product.getStockQuantity())
                 .category(product.getCategory())
-                .createdAt(product.getCreatedAt())
-                .updatedAt(product.getUpdatedAt())
                 .build();
     }
 
@@ -26,8 +24,6 @@ public class ProductMapper {
                 .price(productDto.getPrice())
                 .stockQuantity(productDto.getStockQuantity())
                 .category(productDto.getCategory())
-                .createdAt(productDto.getCreatedAt())
-                .updatedAt(productDto.getUpdatedAt())
                 .build();
     }
 }

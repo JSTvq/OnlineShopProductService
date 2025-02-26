@@ -3,7 +3,6 @@ package com.kir138.model.dto;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Builder
@@ -17,8 +16,6 @@ public class ProductDto {
     private BigDecimal price;
     private Integer stockQuantity;
     private String category;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     @Override
     public boolean equals(Object o) {

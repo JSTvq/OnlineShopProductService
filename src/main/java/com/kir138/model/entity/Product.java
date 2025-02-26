@@ -13,7 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +22,6 @@ public class Product {
     private BigDecimal price;
     private Integer stockQuantity;
     private String category;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     @Override
     public boolean equals(Object o) {
