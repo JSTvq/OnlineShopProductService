@@ -19,11 +19,12 @@ import static org.springframework.kafka.listener.ContainerProperties.AckMode.MAN
 public class ProductServiceConsumer {
     private final AddCartItemHandler addCartItemHandler;
 
-    @KafkaListener(topics = "cart-item-added", groupId = "online-shop-group")
+    @KafkaListener(topics = "cart-item-added", groupId = "online-shop-group1")
     public void listenCartItemEvent(ConsumerRecord<String, ProductValidationResponse> consumerRecord) {
         try {
-            ProductValidationResponse event = consumerRecord.value();
-            addCartItemHandler.handle(event);
+            ProductValidationResponse response = consumerRecord.value();
+            System.out.println("Получено сообщение от Кафка: " + response);
+            addCartItemHandler.handle(response);
 
         } catch (RuntimeException e) {
             log.error(e.getMessage());

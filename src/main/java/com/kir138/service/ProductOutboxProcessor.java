@@ -19,11 +19,15 @@ public class ProductOutboxProcessor {
 
     @Scheduled(fixedDelay = 5000)
     public void processPendingEvents() {
+        System.out.println("стартует метод с отправкой через кафку");
         List<OutboxProduct> products = outboxProductRepository.findAllByStatus(OutboxStatus.PENDING);
+        System.out.println("выводим то что нашли " + products.toString());
         for (OutboxProduct product : products) {
             try {
                 // Отправка в Kafka
+                System.out.println("Sending message to Kafka: " + product.getPayload());
                 kafkaTemplate.send(product.getTopic(), product.getPayload());
+                System.out.println("Message sent successfully, changing status to SENT");
                 // Если отправка прошла успешно, меняем статус на SENT.
                 product.setStatus(OutboxStatus.SENT);
                 outboxProductRepository.save(product);

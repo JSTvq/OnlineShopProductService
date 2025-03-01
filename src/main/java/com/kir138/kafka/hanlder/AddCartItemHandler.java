@@ -1,5 +1,6 @@
 package com.kir138.kafka.hanlder;
 
+import com.kir138.enumStatus.OutboxStatus;
 import com.kir138.model.dto.CartItemEvent;
 import com.kir138.model.dto.ProductValidationResponse;
 import com.kir138.model.entity.OutboxProduct;
@@ -16,13 +17,14 @@ public class AddCartItemHandler {
 
     public void handle(ProductValidationResponse event) {
 
-        boolean productExists = productRepository.existsById(event.getProductId());
+        boolean productExists = checkProductExists(event.getProductId());
         try {
             OutboxProduct outboxProductEvent = OutboxProduct.builder()
                     .aggregateType("Cart")
                     .aggregateId(event.getCartId())
                     .type("ProductValidationResponse")
                     .topic("product-validation-response")
+                    .status(OutboxStatus.PENDING)
                     .payload(ProductValidationResponse.builder()
                             .cartId(event.getCartId())
                             .productId(event.getProductId())
