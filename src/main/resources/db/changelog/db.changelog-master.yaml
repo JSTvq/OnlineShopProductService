@@ -1,0 +1,6 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset/create-product-table.sql
+
+  - include:
+      file: db/changelog/changeset/create-outbox-product-table.sql
