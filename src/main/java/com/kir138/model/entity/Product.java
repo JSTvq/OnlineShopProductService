@@ -23,6 +23,9 @@ public class Product {
     private Integer stockQuantity;
     private String category;
 
+    //private final LocalDateTime createdAt;
+    //private final LocalDateTime updatedAt;
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
