@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
+
     public final ProductRepository productRepository;
     public final ProductMapper productMapper;
 
@@ -47,6 +48,7 @@ public class ProductService {
                     existingProduct.setPrice(product.getPrice());
                     existingProduct.setCategory(product.getCategory());
                     existingProduct.setStockQuantity(product.getStockQuantity());
+                    existingProduct.setUpdatedAt(product.getUpdatedAt());
                     return productRepository.save(existingProduct);
                 })
                 .orElseGet(() -> {
@@ -55,6 +57,7 @@ public class ProductService {
                             .price(product.getPrice())
                             .category(product.getCategory())
                             .stockQuantity(product.getStockQuantity())
+                            .createdAt(product.getCreatedAt())
                             .build());
                 });
         return productMapper.toMapper(savedProduct);

@@ -10,10 +10,15 @@ import java.util.Objects;
 @Setter
 @Builder
 public class ProductValidationResponse {
+
     private Long cartId;
+
     private Long userId;
+
     private Long productId;
+
     private boolean isValid;
+
     private Integer quantity;
 
     @Override

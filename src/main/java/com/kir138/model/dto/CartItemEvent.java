@@ -11,8 +11,11 @@ import java.util.Objects;
 @NoArgsConstructor
 public class CartItemEvent {
     private Long cartId;
+
     private Long productId;
+
     private Integer quantity;
+
     private Long userId;
 
     @Override

@@ -11,10 +11,15 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDto {
+
     private Long id;
+
     private String name;
+
     private BigDecimal price;
+
     private Integer stockQuantity;
+
     private String category;
 
     @Override

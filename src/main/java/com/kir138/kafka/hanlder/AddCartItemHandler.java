@@ -1,7 +1,6 @@
 package com.kir138.kafka.hanlder;
 
 import com.kir138.enumStatus.OutboxStatus;
-import com.kir138.model.dto.CartItemEvent;
 import com.kir138.model.dto.ProductValidationResponse;
 import com.kir138.model.entity.OutboxProduct;
 import com.kir138.reposity.OutboxProductRepository;
@@ -12,11 +11,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class AddCartItemHandler {
+
     private final ProductRepository productRepository;
+
     private final OutboxProductRepository outboxProductRepository;
 
     public void handle(ProductValidationResponse event) {
-
         boolean productExists = checkProductExists(event.getProductId());
         try {
             OutboxProduct outboxProductEvent = OutboxProduct.builder()

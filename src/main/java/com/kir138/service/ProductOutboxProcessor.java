@@ -15,6 +15,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ProductOutboxProcessor {
+
     private final OutboxProductRepository outboxProductRepository;
     private final KafkaTemplate<String, ProductValidationResponse> kafkaTemplate;
 

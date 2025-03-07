@@ -5,8 +5,11 @@ import com.kir138.model.dto.ProductValidationResponse;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -17,11 +20,13 @@ import java.util.Objects;
 @Getter
 @Setter
 public class OutboxProduct {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String aggregateType;
+
     private Long aggregateId;
 
     // Можно сохранить топик, в который должно быть отправлено сообщение
@@ -37,6 +42,12 @@ public class OutboxProduct {
 
     @Enumerated(EnumType.STRING)
     private OutboxStatus status; // PENDING, SENT, FAILED
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @Override
     public boolean equals(Object o) {

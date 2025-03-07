@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
+import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
@@ -23,7 +24,6 @@ public class kafkaConfig {
     //Читает сообщения из Kafka-топиков
     @Bean
     public ConsumerFactory<String, ProductValidationResponse> consumerFactory() {
-
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "online-shop-group1");
@@ -42,19 +42,18 @@ public class kafkaConfig {
     //Специальный метод, который вызывается при получении сообщения
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, ProductValidationResponse>
-
-    kafkaListenerContainerFactory() {
+        kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, ProductValidationResponse> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
 
         factory.setConsumerFactory(consumerFactory());
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
         return factory;
     }
 
     //Отправляет сообщения в Kafka-топики
     @Bean
     public ProducerFactory<String, ProductValidationResponse> producerFactory() {
-
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -67,7 +66,6 @@ public class kafkaConfig {
 
     @Bean
     public KafkaTemplate<String, ProductValidationResponse> kafkaTemplate() {
-
         return new KafkaTemplate<>(producerFactory());
     }
 }

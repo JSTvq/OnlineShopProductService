@@ -2,6 +2,8 @@ package com.kir138.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,8 +25,10 @@ public class Product {
     private Integer stockQuantity;
     private String category;
 
-    //private final LocalDateTime createdAt;
-    //private final LocalDateTime updatedAt;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @Override
     public boolean equals(Object o) {

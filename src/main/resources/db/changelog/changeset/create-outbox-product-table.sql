@@ -5,5 +5,7 @@ CREATE TABLE IF NOT EXISTS outbox_product (
     topic VARCHAR(255),
     type VARCHAR(255),
     payload JSONB,
-    status VARCHAR(50)
+    status VARCHAR(50),
+    created_at timestamp,
+    updated_at timestamp
 );
