@@ -29,10 +29,8 @@ public class OutboxProduct {
 
     private Long aggregateId;
 
-    // Можно сохранить топик, в который должно быть отправлено сообщение
     private String topic;
 
-    @Column(name = "type")
     private String type;
 
     // Сериализованный JSON-пейлоуд, который будет отправлен
@@ -41,7 +39,7 @@ public class OutboxProduct {
     private ProductValidationResponse payload;
 
     @Enumerated(EnumType.STRING)
-    private OutboxStatus status; // PENDING, SENT, FAILED
+    private OutboxStatus status;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

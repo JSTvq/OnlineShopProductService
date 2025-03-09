@@ -1,8 +1,11 @@
 package com.kir138.model.dto;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Builder
@@ -21,6 +24,12 @@ public class ProductDto {
     private Integer stockQuantity;
 
     private String category;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @Override
     public boolean equals(Object o) {

@@ -1,7 +1,10 @@
 package com.kir138.model.dto;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -20,6 +23,12 @@ public class ProductValidationResponse {
     private boolean isValid;
 
     private Integer quantity;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @Override
     public boolean equals(Object o) {

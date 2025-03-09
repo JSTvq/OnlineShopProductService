@@ -33,9 +33,8 @@ public class ProductController {
     }
 
     @PostMapping("/saveProduct")
-    public ProductDto saveOrUpdateProduct(@Validated @RequestBody ProductDto productDto) {
-        Product pr = productMapper.toEntity(productDto);
-        return productService.saveOrUpdateProduct(pr);
+    public ProductDto saveOrUpdateProduct(@RequestBody ProductDto productDto) {
+        return productService.saveOrUpdateProduct(productDto);
     }
 
     public void deleteProductById(Long id) {

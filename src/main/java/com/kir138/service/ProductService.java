@@ -7,6 +7,7 @@ import com.kir138.reposity.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -41,26 +42,32 @@ public class ProductService {
                 .toList();
     }
 
-    public ProductDto saveOrUpdateProduct(Product product) {
-        Product savedProduct = productRepository.findById(product.getId())
-                .map(existingProduct -> {
-                    existingProduct.setName(product.getName());
-                    existingProduct.setPrice(product.getPrice());
-                    existingProduct.setCategory(product.getCategory());
-                    existingProduct.setStockQuantity(product.getStockQuantity());
-                    existingProduct.setUpdatedAt(product.getUpdatedAt());
-                    return productRepository.save(existingProduct);
-                })
-                .orElseGet(() -> {
-                    return productRepository.save(Product.builder()
-                            .name(product.getName())
-                            .price(product.getPrice())
-                            .category(product.getCategory())
-                            .stockQuantity(product.getStockQuantity())
-                            .createdAt(product.getCreatedAt())
-                            .build());
-                });
-        return productMapper.toMapper(savedProduct);
+    public ProductDto saveOrUpdateProduct(ProductDto productDto) {
+        Product product = productMapper.toEntity(productDto);
+
+        if (product.getId() != null) {
+            return productRepository.findById(product.getId())
+                    .map(existing -> {
+                        existing.setName(product.getName());
+                        existing.setPrice(product.getPrice());
+                        existing.setCategory(product.getCategory());
+                        existing.setStockQuantity(product.getStockQuantity());
+                        existing.setUpdatedAt(LocalDateTime.now());
+                        return productMapper.toMapper(productRepository.save(existing));
+                    })
+                    .orElseGet(() -> {
+                        return productMapper.toMapper(productRepository.save(product));
+                    });
+        } else {
+            Product newProduct = Product.builder()
+                    .name(product.getName())
+                    .price(product.getPrice())
+                    .category(product.getCategory())
+                    .stockQuantity(product.getStockQuantity())
+                    .createdAt(LocalDateTime.now())
+                    .build();
+            return productMapper.toMapper(productRepository.save(newProduct));
+        }
     }
 
     public void deleteProductById(Long id) {

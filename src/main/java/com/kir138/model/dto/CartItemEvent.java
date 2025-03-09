@@ -1,7 +1,10 @@
 package com.kir138.model.dto;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Builder
@@ -17,6 +20,12 @@ public class CartItemEvent {
     private Integer quantity;
 
     private Long userId;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @Override
     public boolean equals(Object o) {
