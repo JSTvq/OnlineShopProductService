@@ -1,8 +1,6 @@
 package com.kir138.controller;
 
-import com.kir138.mapper.ProductMapper;
 import com.kir138.model.dto.ProductDto;
-import com.kir138.model.entity.Product;
 import com.kir138.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -18,16 +16,17 @@ public class ProductController {
 
     private final ProductService productService;
 
-    private final ProductMapper productMapper;
-
-    public ProductDto getProductById(Long id) {
+    @GetMapping("/{id}")
+    public ProductDto getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
 
+    @GetMapping("/category")
     public ProductDto getByCategory(String category) {
         return productService.getByCategory(category);
     }
 
+    @GetMapping("/allProducts")
     public List<ProductDto> getAllProducts() {
         return productService.getAllProducts();
     }
@@ -37,7 +36,8 @@ public class ProductController {
         return productService.saveOrUpdateProduct(productDto);
     }
 
-    public void deleteProductById(Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteProductById(@PathVariable Long id) {
         productService.deleteProductById(id);
     }
 }
