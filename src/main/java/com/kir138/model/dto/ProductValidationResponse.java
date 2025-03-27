@@ -20,7 +20,7 @@ public class ProductValidationResponse {
 
     private Long productId;
 
-    private boolean isValid;
+    private Boolean isValid;
 
     private Integer quantity;
 

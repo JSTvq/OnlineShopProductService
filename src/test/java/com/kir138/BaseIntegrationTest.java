@@ -5,6 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
+import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -21,8 +22,8 @@ public abstract class BaseIntegrationTest {
     // Автоматическое подключение контейнера
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:14.5")
             .withDatabaseName("testdb")
-            .withUsername("postgres")
-            .withPassword("12341234");
+            .withUsername("test")
+            .withPassword("test");
 
 
     @Container
@@ -38,5 +39,7 @@ public abstract class BaseIntegrationTest {
         registry.add("spring.datasource.password", postgres::getPassword);
 
         registry.add("spring.kafka.bootstrap-servers", kafka::getBootstrapServers);
+        registry.add("spring.kafka.consumer.auto-offset-reset", () -> "earliest");
+        registry.add("spring.kafka.consumer.group-id", () -> "test-group");
     }
 }

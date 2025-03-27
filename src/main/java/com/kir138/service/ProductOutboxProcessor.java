@@ -33,15 +33,14 @@ public class ProductOutboxProcessor {
                 try {
                     // Отправка в Kafka
                     System.out.println("Sending message to Kafka: " + product.getPayload());
-                    kafkaTemplate.send(product.getTopic(), product.getPayload());
+                    kafkaTemplate.send(product.getTopic(), product.getPayload()).get();
                     System.out.println("Message sent successfully, changing status to SENT");
                     // Если отправка прошла успешно, меняем статус на SENT.
                     product.setStatus(OutboxStatus.SENT);
-                    outboxProductRepository.save(product);
                 } catch (Exception ex) {
                     product.setStatus(OutboxStatus.FAILED);
-                    outboxProductRepository.save(product);
                 }
+                outboxProductRepository.save(product);
             }
             pageable = pageable.next();
         } while (!products.isEmpty());

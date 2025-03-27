@@ -21,8 +21,8 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
-    @GetMapping("/category")
-    public ProductDto getByCategory(String category) {
+    @GetMapping("/getCategory")
+    public List<ProductDto> getByCategory(@RequestParam String category) {
         return productService.getByCategory(category);
     }
 

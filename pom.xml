@@ -110,6 +110,36 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.11</version> <!-- Актуальная версия -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal> <!-- Активирует JaCoCo при запуске тестов -->
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal> <!-- Генерирует отчёт после тестов -->
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>com/kir138/enumStatus/**</exclude>
+                                <exclude>com/kir138/kafka/KafkaConfig</exclude>
+                                <exclude>com/kir138/mapper/**</exclude>
+                                <exclude>com/kir138/model/**</exclude>
+                                <exclude>com/kir138/repository/**</exclude>
+                                <exclude>com/kir138/Main</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

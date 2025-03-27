@@ -27,12 +27,11 @@ public class ProductService {
                 .orElseThrow();
     }
 
-    public ProductDto getByCategory(String category) {
+    public List<ProductDto> getByCategory(String category) {
         return productRepository.findByCategory(category)
                 .stream()
                 .map(productMapper::toMapper)
-                .findFirst()
-                .orElseThrow();
+                .toList();
     }
 
     public List<ProductDto> getAllProducts() {
