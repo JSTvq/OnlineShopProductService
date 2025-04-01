@@ -19,7 +19,7 @@ public class ProductOutboxProcessor {
     private final OutboxProductRepository outboxProductRepository;
     private final KafkaTemplate<String, ProductValidationResponse> kafkaTemplate;
 
-    @Scheduled(fixedDelay = 50_000)
+    @Scheduled(fixedDelay = 5_000)
     public void processPendingEvents() {
 
         List<OutboxProduct> products;

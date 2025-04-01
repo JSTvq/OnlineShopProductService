@@ -4,7 +4,7 @@ import com.kir138.enumStatus.OutboxStatus;
 import com.kir138.model.dto.ProductValidationResponse;
 import com.kir138.model.entity.OutboxProduct;
 import com.kir138.reposity.OutboxProductRepository;
-import com.kir138.reposity.ProductRepository;
+import com.kir138.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AddCartItemHandler {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     private final OutboxProductRepository outboxProductRepository;
 
     public void handle(ProductValidationResponse event) {
-        boolean productExists = checkProductExists(event.getProductId());
+        boolean productExists = checkProductExists(event.getProductId(), event.getQuantity());
         try {
             OutboxProduct outboxProductEvent = OutboxProduct.builder()
                     .aggregateType("Cart")
@@ -39,8 +39,11 @@ public class AddCartItemHandler {
         }
     }
 
-    private boolean checkProductExists(Long productId) {
+    private boolean checkProductExists(Long productId, Integer quantity) {
         // Делаем запрос к БД или другому сервису, проверяем наличие товара
-        return productRepository.findById(productId).isPresent();
+        //сделать так чтобы была проверка есть ли такой продукт вообще и если
+        // есть то нужна проверка по кол-ву, есть ли такое или нет
+
+        return productService.isQuantityAvailable(productId, quantity);
     }
 }

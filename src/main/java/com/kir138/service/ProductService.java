@@ -4,8 +4,10 @@ import com.kir138.mapper.ProductMapper;
 import com.kir138.model.dto.ProductDto;
 import com.kir138.model.entity.Product;
 import com.kir138.reposity.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -71,5 +73,19 @@ public class ProductService {
 
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
+    }
+
+    @Transactional
+    public boolean isQuantityAvailable(Long productId, Integer quantity) {
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + productId));
+
+        if (product.getStockQuantity() < quantity) {
+            throw new RuntimeException("нет такого количества");
+        } else {
+            product.setStockQuantity(product.getStockQuantity() - quantity);
+            return true;
+        }
     }
 }
