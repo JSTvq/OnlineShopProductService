@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -62,7 +61,6 @@ public class ProductService {
             return productMapper.toMapper(productRepository.save(product));
         }
     }
-
 
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
