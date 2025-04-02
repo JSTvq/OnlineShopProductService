@@ -43,33 +43,26 @@ public class ProductService {
                 .toList();
     }
 
+    @Transactional
     public ProductDto saveOrUpdateProduct(ProductDto productDto) {
         Product product = productMapper.toEntity(productDto);
 
-        if (product.getId() != null) {
-            return productRepository.findById(product.getId())
-                    .map(existing -> {
-                        existing.setName(product.getName());
-                        existing.setPrice(product.getPrice());
-                        existing.setCategory(product.getCategory());
-                        existing.setStockQuantity(product.getStockQuantity());
-                        existing.setUpdatedAt(LocalDateTime.now());
-                        return productMapper.toMapper(productRepository.save(existing));
-                    })
-                    .orElseGet(() -> {
-                        return productMapper.toMapper(productRepository.save(product));
-                    });
+        // Проверяем, существует ли продукт с таким названием
+        Product existingProduct = productRepository.findByName(product.getName());
+
+        if (existingProduct != null) {
+            // Обновляем существующий продукт
+            existingProduct.setName(product.getName());
+            existingProduct.setPrice(product.getPrice());
+            existingProduct.setCategory(product.getCategory());
+            existingProduct.setStockQuantity(product.getStockQuantity());
+            return productMapper.toMapper(productRepository.save(existingProduct));
         } else {
-            Product newProduct = Product.builder()
-                    .name(product.getName())
-                    .price(product.getPrice())
-                    .category(product.getCategory())
-                    .stockQuantity(product.getStockQuantity())
-                    .createdAt(LocalDateTime.now())
-                    .build();
-            return productMapper.toMapper(productRepository.save(newProduct));
+            // Создаем новый продукт
+            return productMapper.toMapper(productRepository.save(product));
         }
     }
+
 
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
