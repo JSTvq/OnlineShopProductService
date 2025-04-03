@@ -27,7 +27,7 @@ public class ProductOutboxProcessor {
 
         do {
             System.out.println("стартует метод с отправкой через кафку");
-            products = outboxProductRepository.findAllByStatus(OutboxStatus.PENDING);
+            products = outboxProductRepository.findAllByStatus(OutboxStatus.PENDING, pageable);
             System.out.println("выводим то что нашли " + products.toString());
             for (OutboxProduct product : products) {
                 try {
