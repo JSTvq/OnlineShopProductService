@@ -48,4 +48,14 @@ public class Product {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    /**
+     * @Override
+     * public boolean equals(Object o) {
+     *     if (this == o) return true;
+     *     if (!(o instanceof Student)) return false;
+     *     Student other = (Student) o;
+     *     return id != null && id.equals(other.getId());
+     * }
+     */
 }

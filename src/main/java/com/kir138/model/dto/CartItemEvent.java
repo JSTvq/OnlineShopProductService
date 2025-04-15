@@ -31,7 +31,8 @@ public class CartItemEvent {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CartItemEvent that = (CartItemEvent) o;
-        return Objects.equals(cartId, that.cartId) && Objects.equals(productId, that.productId) && Objects.equals(quantity, that.quantity) && Objects.equals(userId, that.userId);
+        return Objects.equals(cartId, that.cartId) && Objects.equals(productId, that.productId)
+                && Objects.equals(quantity, that.quantity) && Objects.equals(userId, that.userId);
     }
 
     @Override
